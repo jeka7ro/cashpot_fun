@@ -1,0 +1,19 @@
+import { withAuth } from "next-auth/middleware";
+
+export default withAuth(
+  function middleware(req) {
+    // Adaugă logica custom dacă e nevoie
+  },
+  {
+    callbacks: {
+      authorized: ({ token }) => !!token,
+    },
+    pages: {
+      signIn: "/admin/login",
+    },
+  }
+);
+
+export const config = {
+  matcher: ["/admin/:path*"],
+};

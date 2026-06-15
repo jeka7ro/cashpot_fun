@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --no-git)",
+      "Bash(npm install *)",
+      "Bash(npx prisma *)",
+      "Bash(mkdir -p /Users/eugeniucazmal/Downloads/dev_office/cashpot.fun/src/app/products/\\\\[slug\\\\])",
+      "Bash(mkdir -p /Users/eugeniucazmal/Downloads/dev_office/cashpot.fun/src/app/api/auth/\\\\[...nextauth\\\\])",
+      "Bash(mkdir -p /Users/eugeniucazmal/Downloads/dev_office/cashpot.fun/src/app/api/products/\\\\[id\\\\])",
+      "Bash(mkdir -p /Users/eugeniucazmal/Downloads/dev_office/cashpot.fun/src/app/api/orders/\\\\[id\\\\])",
+      "Bash(npx ts-node *)",
+      "Bash(node -e \"const {PrismaClient} = require\\('@prisma/client'\\); const p = new PrismaClient\\(\\); console.log\\(Object.keys\\(p\\)\\)\")",
+      "Bash(node -e \"const {PrismaLibSql} = require\\('@prisma/adapter-libsql'\\); console.log\\(PrismaLibSql.toString\\(\\).slice\\(0, 200\\)\\)\")",
+      "Bash(npm run *)",
+      "Bash(curl -s http://localhost:3000)",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "Bash(pkill -f \"next dev\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000)",
+      "Bash(PORT=1166 npm run dev)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:1166)",
+      "Bash(curl -s http://localhost:1166)",
+      "Bash(cat)",
+      "Bash(python3 /tmp/make_placeholder.py)",
+      "Bash(pkill -f \"next dev\" 2>/dev/null; sleep 1 *)",
+      "WebFetch(domain:cashpot.ro)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:1166/products/cashpot-classic-tee)",
+      "Bash(curl -s https://cashpotdev.up.railway.app/)",
+      "Bash(xargs ls -t)"
+    ]
+  }
+}
