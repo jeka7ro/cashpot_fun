@@ -131,7 +131,7 @@ export default function ProductForm({
     const method = initial?.id ? "PATCH" : "POST";
     
     const totalStock = useAdvancedInventory 
-      ? Object.values(form.inventory).reduce((acc: number, val) => acc + (Number(val) || 0), 0)
+      ? Object.values(form.inventory as Record<string, number>).reduce((acc: number, val) => acc + (Number(val) || 0), 0)
       : form.stock;
       
     const finalInventory = useAdvancedInventory ? form.inventory : {};
@@ -182,7 +182,7 @@ export default function ProductForm({
           <label className="block text-gray-500 dark:text-white/50 text-xs uppercase tracking-wide mb-1">Stoc Global</label>
           <input
             type="number"
-            value={useAdvancedInventory ? Object.values(form.inventory).reduce((acc: number, val) => acc + (Number(val) || 0), 0) : form.stock}
+            value={useAdvancedInventory ? Object.values(form.inventory as Record<string, number>).reduce((acc: number, val) => acc + (Number(val) || 0), 0) : form.stock}
             onChange={(e) => set("stock", parseInt(e.target.value) || 0)}
             disabled={useAdvancedInventory}
             className={`w-full bg-gray-50 dark:bg-zinc-800 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none transition ${useAdvancedInventory ? "opacity-50 cursor-not-allowed text-gray-400" : "text-gray-900 dark:text-white focus:border-violet-500"}`}
@@ -328,10 +328,10 @@ export default function ProductForm({
                             <input
                               type="number"
                               min="0"
-                              value={form.inventory[key] || ""}
+                              value={(form.inventory as Record<string, number>)[key] || ""}
                               onChange={(e) => {
                                 const v = parseInt(e.target.value) || 0;
-                                set("inventory", { ...form.inventory, [key]: v });
+                                set("inventory", { ...(form.inventory as Record<string, number>), [key]: v });
                               }}
                               className="w-20 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm focus:border-violet-500 focus:outline-none"
                               placeholder="0"
