@@ -5,10 +5,22 @@ import Image from "next/image";
 import { Plus, Pencil } from "lucide-react";
 import DeleteProductButton from "@/components/admin/DeleteProductButton";
 
+import { revalidatePath } from "next/cache";
+
 export const dynamic = "force-dynamic";
 
+async function updatePosition(formData: FormData) {
+  "use server";
+  const id = formData.get("id") as string;
+  const position = parseInt(formData.get("position") as string) || 0;
+  await prisma.product.update({ where: { id }, data: { position } });
+  revalidatePath("/");
+  revalidatePath("/shop");
+  revalidatePath("/admin/products");
+}
+
 export default async function AdminProductsPage() {
-  const products = await prisma.product.findMany({ orderBy: { createdAt: "desc" } });
+  const products = await prisma.product.findMany({ orderBy: [{ position: "asc" }, { createdAt: "desc" }] });
 
   return (
     <div>
@@ -27,6 +39,7 @@ export default async function AdminProductsPage() {
           <thead>
             <tr className="text-gray-500 dark:text-white/40 text-xs border-b border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-transparent">
               <th className="text-left p-4 font-semibold">Produs</th>
+              <th className="text-left p-4 hidden md:table-cell font-semibold">Ordine</th>
               <th className="text-left p-4 hidden md:table-cell font-semibold">Categorie</th>
               <th className="text-left p-4 font-semibold">Preț</th>
               <th className="text-left p-4 hidden md:table-cell font-semibold">Stoc</th>
@@ -52,6 +65,18 @@ export default async function AdminProductsPage() {
                         <p className="text-gray-500 dark:text-white/40 text-xs">{p.slug}</p>
                       </div>
                     </div>
+                  </td>
+                  <td className="p-4 hidden md:table-cell">
+                    <form action={updatePosition} className="flex items-center gap-2">
+                      <input type="hidden" name="id" value={p.id} />
+                      <input 
+                        type="number" 
+                        name="position" 
+                        defaultValue={p.position} 
+                        className="w-16 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-white/10 rounded-lg px-2 py-1 text-sm focus:border-violet-500 focus:outline-none" 
+                      />
+                      <button type="submit" className="text-xs font-semibold px-2 py-1 bg-gray-100 dark:bg-white/5 rounded-lg hover:bg-gray-200 dark:hover:bg-white/10 transition">OK</button>
+                    </form>
                   </td>
                   <td className="p-4 hidden md:table-cell text-gray-500 dark:text-white/60">{p.category}</td>
                   <td className="p-4 font-bold text-gray-900 dark:text-white">{formatPrice(p.price)}</td>
@@ -86,7 +111,7 @@ export default async function AdminProductsPage() {
             })}
             {products.length === 0 && (
               <tr>
-                <td colSpan={6} className="p-12 text-center text-gray-500 dark:text-white/30">
+                <td colSpan={7} className="p-12 text-center text-gray-500 dark:text-white/30">
                   Niciun produs. <Link href="/admin/products/new" className="text-violet-600 dark:text-violet-500 hover:underline">Adaugă primul produs</Link>
                 </td>
               </tr>

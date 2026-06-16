@@ -19,7 +19,7 @@ export default async function ShopPage({ searchParams }: Props) {
 
   const products = await prisma.product.findMany({
     where,
-    orderBy: { createdAt: "desc" },
+    orderBy: [{ position: "asc" }, { createdAt: "desc" }],
   });
 
   const categories = await prisma.category.findMany({

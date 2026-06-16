@@ -10,8 +10,8 @@ export const dynamic = "force-dynamic";
 export default async function HomePage() {
   const [settings, featured, latest, categories] = await Promise.all([
     getSettings(),
-    prisma.product.findMany({ where: { published: true, featured: true }, take: 4, orderBy: { createdAt: "desc" } }),
-    prisma.product.findMany({ where: { published: true }, take: 8, orderBy: { createdAt: "desc" } }),
+    prisma.product.findMany({ where: { published: true, featured: true }, take: 4, orderBy: [{ position: "asc" }, { createdAt: "desc" }] }),
+    prisma.product.findMany({ where: { published: true }, take: 8, orderBy: [{ position: "asc" }, { createdAt: "desc" }] }),
     prisma.category.findMany({ where: { active: true }, orderBy: { position: "asc" } }),
   ]);
 

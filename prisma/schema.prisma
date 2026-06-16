@@ -22,6 +22,7 @@ model Product {
   stock        Int         @default(0)
   published    Boolean     @default(false)
   featured     Boolean     @default(false)
+  position     Int         @default(0)
   weight       Float?
   sku          String?
   tags         String      @default("[]")

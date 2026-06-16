@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
       ...(category ? { category } : {}),
       ...(published !== null ? { published: published === "true" } : {}),
     },
-    orderBy: { createdAt: "desc" },
+    orderBy: [{ position: "asc" }, { createdAt: "desc" }],
   });
   return NextResponse.json(products);
 }
@@ -40,6 +40,7 @@ export async function POST(req: NextRequest) {
         images: JSON.stringify(body.images || []),
         inventory: typeof body.inventory === "string" ? body.inventory : JSON.stringify(body.inventory || {}),
         primaryColor: body.primaryColor || null,
+        tags: body.tags || "[]",
         stock: body.stock || 0,
         published: body.published || false,
         featured: body.featured || false,

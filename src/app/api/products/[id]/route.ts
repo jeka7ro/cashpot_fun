@@ -25,6 +25,7 @@ export async function PATCH(req: NextRequest, { params }: Context) {
         ...(body.sizes !== undefined && { sizes: JSON.stringify(body.sizes) }),
         ...(body.colors !== undefined && { colors: JSON.stringify(body.colors) }),
         ...(body.images !== undefined && { images: JSON.stringify(body.images) }),
+        ...(body.tags !== undefined && { tags: typeof body.tags === "string" ? body.tags : JSON.stringify(body.tags) }),
         ...(body.inventory !== undefined && { inventory: typeof body.inventory === "string" ? body.inventory : JSON.stringify(body.inventory) }),
         ...(body.primaryColor !== undefined && { primaryColor: body.primaryColor }),
         ...(body.stock !== undefined && { stock: body.stock }),

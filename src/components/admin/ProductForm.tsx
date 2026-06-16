@@ -251,7 +251,7 @@ export default function ProductForm({
       <div>
         <label className="block text-gray-500 dark:text-white/50 text-xs uppercase tracking-wide mb-2">Mărimi</label>
         <div className="flex gap-2 flex-wrap mb-2">
-          {DEFAULT_SIZES.map((s) => (
+          {Array.from(new Set([...DEFAULT_SIZES, ...form.sizes])).map((s) => (
             <button
               key={s}
               type="button"
@@ -286,7 +286,7 @@ export default function ProductForm({
       <div>
         <label className="block text-gray-500 dark:text-white/50 text-xs uppercase tracking-wide mb-2">Culori</label>
         <div className="flex gap-2 flex-wrap mb-2">
-          {DEFAULT_COLORS.map((c) => (
+          {Array.from(new Set([...DEFAULT_COLORS, ...form.colors])).map((c) => (
             <button
               key={c}
               type="button"
