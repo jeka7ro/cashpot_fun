@@ -270,6 +270,12 @@ export default function ProductForm({
             placeholder="Adaugă mărime custom..."
             value={sizeInput}
             onChange={(e) => setSizeInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                if (sizeInput.trim()) { set("sizes", [...form.sizes, sizeInput.trim()]); setSizeInput(""); }
+              }
+            }}
             className="flex-1 bg-gray-50 dark:bg-zinc-800 border border-gray-200 dark:border-white/10 rounded-xl px-3 py-2 text-gray-900 dark:text-white text-sm focus:border-violet-500 focus:outline-none placeholder:text-gray-400 dark:placeholder:text-gray-500"
           />
           <button
@@ -305,6 +311,12 @@ export default function ProductForm({
             placeholder="Adaugă culoare custom..."
             value={colorInput}
             onChange={(e) => setColorInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                if (colorInput.trim()) { set("colors", [...form.colors, colorInput.trim()]); setColorInput(""); }
+              }
+            }}
             className="flex-1 bg-gray-50 dark:bg-zinc-800 border border-gray-200 dark:border-white/10 rounded-xl px-3 py-2 text-gray-900 dark:text-white text-sm focus:border-violet-500 focus:outline-none placeholder:text-gray-400 dark:placeholder:text-gray-500"
           />
           <button
