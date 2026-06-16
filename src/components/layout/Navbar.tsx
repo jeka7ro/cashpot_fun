@@ -11,6 +11,8 @@ type Props = { brandName: string; hasAnnouncement: boolean };
 
 const NAV_LINKS = [
   { href: "/shop", label: "SHOP" },
+  { href: "/shop?tag=Bărbați", label: "BĂRBAȚI" },
+  { href: "/shop?tag=Femei", label: "FEMEI" },
   { href: "/shop?category=tricouri", label: "TRICOURI" },
   { href: "/shop?category=hanorace", label: "HANORACE" },
   { href: "/shop?category=accesorii", label: "ACCESORII" },

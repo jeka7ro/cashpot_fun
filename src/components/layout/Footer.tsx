@@ -56,6 +56,8 @@ export default function Footer({ settings }: { settings: SiteSettings }) {
             <div className="flex flex-col gap-2.5">
               {[
                 { href: "/shop", label: "Toate produsele" },
+                { href: "/shop?tag=Bărbați", label: "Bărbați" },
+                { href: "/shop?tag=Femei", label: "Femei" },
                 { href: "/shop?category=tricouri", label: "Tricouri" },
                 { href: "/shop?category=hanorace", label: "Hanorace" },
                 { href: "/shop?category=accesorii", label: "Accesorii" },

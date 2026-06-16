@@ -28,6 +28,7 @@ type Product = {
   stock: number;
   published: boolean;
   featured: boolean;
+  tags: string[];
 };
 
 const CATEGORIES = ["tricouri", "hanorace", "accesorii", "alte"];
@@ -83,6 +84,7 @@ export default function ProductForm({
     stock: initial?.stock || 0,
     published: initial?.published ?? false,
     featured: initial?.featured ?? false,
+    tags: (initial?.tags && typeof initial?.tags === "string" ? JSON.parse(initial.tags as string) : initial?.tags) || [],
   });
 
   const [sizeInput, setSizeInput] = useState("");
@@ -139,7 +141,8 @@ export default function ProductForm({
     const bodyToSubmit = {
       ...form,
       stock: totalStock,
-      inventory: JSON.stringify(finalInventory)
+      inventory: JSON.stringify(finalInventory),
+      tags: JSON.stringify(form.tags || [])
     };
 
     const res = await fetch(url, {
@@ -205,6 +208,27 @@ export default function ProductForm({
             ))
           )}
         </select>
+      </div>
+
+      <div>
+        <label className="block text-gray-500 dark:text-white/50 text-xs uppercase tracking-wide mb-1">Destinat pentru (Gen)</label>
+        <div className="flex gap-2 flex-wrap">
+          {["Bărbați", "Femei", "Unisex", "Copii"].map(tag => (
+            <button
+              key={tag}
+              type="button"
+              onClick={() => {
+                const currentTags = form.tags || [];
+                set("tags", currentTags.includes(tag) ? currentTags.filter(t => t !== tag) : [...currentTags, tag]);
+              }}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition border ${
+                (form.tags || []).includes(tag) ? "border-violet-500 text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-500/10" : "border-gray-200 text-gray-500 dark:border-white/10 dark:text-white/50 hover:border-gray-300 dark:hover:border-white/20"
+              }`}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
       </div>
 
       {form.colors.length > 0 && (

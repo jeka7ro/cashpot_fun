@@ -4,17 +4,18 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
 type Props = {
-  searchParams: Promise<{ category?: string; featured?: string }>;
+  searchParams: Promise<{ category?: string; featured?: string; tag?: string }>;
 };
 
 export const dynamic = "force-dynamic";
 
 export default async function ShopPage({ searchParams }: Props) {
-  const { category, featured } = await searchParams;
+  const { category, featured, tag } = await searchParams;
 
   const where: any = { published: true };
   if (category) where.category = category;
   if (featured === "1") where.featured = true;
+  if (tag) where.tags = { contains: `"${tag}"` };
 
   const products = await prisma.product.findMany({
     where,
@@ -35,7 +36,7 @@ export default async function ShopPage({ searchParams }: Props) {
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
         <div>
           <h1 className="text-4xl font-black tracking-tight uppercase">
-            {category ? category : featured === "1" ? "Featured Drops" : "TOATE PRODUSELE"}
+            {tag ? tag : category ? category : featured === "1" ? "Featured Drops" : "TOATE PRODUSELE"}
           </h1>
           <p className="text-white/40 mt-2 text-sm">{products.length} produse găsite</p>
         </div>
