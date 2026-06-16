@@ -17,7 +17,9 @@ export async function POST(req: NextRequest) {
 
   const ext = file.name.split(".").pop() || "jpg";
   const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-  const uploadDir = path.join(process.cwd(), "public", "uploads");
+  const uploadDir = process.env.RAILWAY_ENVIRONMENT_NAME || process.env.RAILWAY_STATIC_URL || process.env.RAILWAY_PUBLIC_DOMAIN || process.env.NODE_ENV === 'production' 
+    ? "/data/uploads" 
+    : path.join(process.cwd(), "public", "uploads");
 
   await mkdir(uploadDir, { recursive: true });
   await writeFile(path.join(uploadDir, filename), buffer);

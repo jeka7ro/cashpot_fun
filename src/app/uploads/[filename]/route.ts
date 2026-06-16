@@ -14,7 +14,10 @@ export async function GET(
       return new NextResponse("Not Found", { status: 404 });
     }
 
-    const filePath = path.join(process.cwd(), "public", "uploads", filename);
+    const uploadDir = process.env.RAILWAY_ENVIRONMENT_NAME || process.env.RAILWAY_STATIC_URL || process.env.RAILWAY_PUBLIC_DOMAIN || process.env.NODE_ENV === 'production' 
+      ? "/data/uploads" 
+      : path.join(process.cwd(), "public", "uploads");
+    const filePath = path.join(uploadDir, filename);
     const fileBuffer = await readFile(filePath);
 
     const ext = filename.split(".").pop()?.toLowerCase() || "jpg";
